@@ -50,6 +50,25 @@ body{
     position: absolute;
     bottom: 0;
     left: 0;
+
+    background: url('./img/suelo.png') repeat-x 0px 0px;
+    background-size: 50% 42px;
+}
+
+.score{
+    width: 100px;
+    height: 30px;
+
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    z-index: 10;
+
+    color: #d48872;
+    font-family: Verdana;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: right;
 }
 
 @keyframes animarDino {
