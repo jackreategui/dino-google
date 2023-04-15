@@ -55,7 +55,7 @@ function Start() {
     textoScore = document.querySelector(".score");
     dino = document.querySelector(".dino");
     document.addEventListener('keydown', HandleKeyDown);
-
+    
     window.addEventListener('click', ()=> {
         Saltar();
     });
