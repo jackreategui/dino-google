@@ -48,10 +48,29 @@ function Start() {
     contenedor = document.querySelector(".contenedor");
     textoScore = document.querySelector(".score");
     dino = document.querySelector(".dino");
+    document.addEventListener('keydown', HandleKeyDown);
+}
+
+function HandleKeyDown(ev) {
+    if (ev.keyCode == 32) {
+        Saltar();
+    }
+
+}
+
+function Saltar() {
+    if (dinoPosY === sueloY) {
+        saltando = true;
+        velY = impulso;
+        dino.classList.remove("dino-corriendo");
+    }
 }
 
 function Update() {
     MoverSuelo();
+    MoverDinosaurio();
+
+    velY -= gravedad * deltaTime;
 }
 
 function MoverSuelo() { 
@@ -62,4 +81,21 @@ function MoverSuelo() {
 function CalcularDesplazamiento() { 
     return velEscenario * deltaTime * gameVel;
 
+}
+
+function MoverDinosaurio() {
+    dinoPosY += velY * deltaTime;
+    if (dinoPosY <  sueloY) {
+        TocarSuelo();
+    }
+    dino.style.bottom = dinoPosY + 'px';
+}
+
+function TocarSuelo() {
+    dinoPosY = sueloY;
+    velY = 0;
+    if (saltando) {
+        dino.classList.add('dino-corriendo');
+    }
+    saltando = false;
 }

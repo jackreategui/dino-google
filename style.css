@@ -19,6 +19,7 @@ body{
     position: relative;
 
     background: linear-gradient(#B7d6c7, #ffe2d1);
+    overflow: hidden;
 }
 
 .dino{
