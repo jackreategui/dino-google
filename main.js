@@ -73,10 +73,15 @@ function Saltar() {
 }
 
 function Update() {
+    if (parado) {
+        return;
+    }
+
     MoverSuelo();
     MoverDinosaurio();
     DecidirCrearObstaculo();
     MoverObstaculos()
+    DetectarColision();
 
     velY -= gravedad * deltaTime;
 }
@@ -143,4 +148,40 @@ function MoverObstaculos() {
 function GanarPuntos() {
     score++;
     textoScore.innerText = score;
+}
+
+function DetectarColision() {
+    for (let i = 0; i < obstaculos.length; i++) {
+        if (obstaculos[i].posX > dinoPosX + dino.clientWidth) {
+            break;
+        } else {
+            if (IsCollision(dino, obstaculos[i], 10, 30, 15, 20)) {
+                GameOver();
+            }
+        }
+        
+    }
+}
+
+function IsCollision(a, b, paddingTop,  paddingRight, paddingBottom, paddingLeft) {
+    let aRect = a.getBoundingClientRect();
+    let bRect = b.getBoundingClientRect();
+
+    return !(
+        ((aRect.top + aRect.height - paddingBottom) < (bRect.top)) ||
+        (aRect.top + paddingTop > (bRect.top + bRect.height)) ||
+        ((aRect.left + aRect.width - paddingRight) < bRect.left) ||
+        (aRect.left + paddingLeft > (bRect.left + bRect.width))
+    );
+}
+
+function GameOver() {
+    Estrellarse();
+    gameOver.style.display = 'block';
+}
+
+function Estrellarse() {
+    dino.classList.remove('dino-corriendo');
+    dino.classList.add('dino-estrellado');
+    parado = true;
 }
