@@ -55,13 +55,20 @@ function Start() {
     textoScore = document.querySelector(".score");
     dino = document.querySelector(".dino");
     document.addEventListener('keydown', HandleKeyDown);
+
+    window.addEventListener('click', ()=> {
+        Saltar();
+    });
 }
 
 function HandleKeyDown(ev) {
     if (ev.keyCode == 32) {
         Saltar();
-    }
 
+        if (parado) {
+            location.reload();
+        }
+    }
 }
 
 function Saltar() {
@@ -177,11 +184,18 @@ function IsCollision(a, b, paddingTop,  paddingRight, paddingBottom, paddingLeft
 
 function GameOver() {
     Estrellarse();
-    gameOver.style.display = 'block';
+    reiniciarJuego();
+    // gameOver.style.display = 'block';
 }
 
 function Estrellarse() {
     dino.classList.remove('dino-corriendo');
     dino.classList.add('dino-estrellado');
     parado = true;
+}
+
+function reiniciarJuego() {
+    window.addEventListener('click', ()=> {
+        location.reload();
+    });
 }
