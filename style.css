@@ -72,6 +72,18 @@ body{
     text-align: right;
 }
 
+.cactus{
+    width: 46px;
+    height: 96px;
+
+    position: absolute;
+    bottom: 16px;
+    left: 600px;
+    z-index: 1;
+
+    background: url(./img/cactus1.png) no-repeat;
+}
+
 @keyframes animarDino {
     from{
         background-position-x: -84px;

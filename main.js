@@ -36,6 +36,12 @@ let score = 0;
 let parado = false;
 let saltando = false;
 
+let tiempoHastaObstaculo = 2;
+const tiempoObstaculoMin = 0.7;
+const tiempoObstaculoMax = 1.8;
+let obstaculoPosY = 16;
+const obstaculos = [];
+
 let contenedor;
 let dino;
 let textoScore;
@@ -69,6 +75,8 @@ function Saltar() {
 function Update() {
     MoverSuelo();
     MoverDinosaurio();
+    DecidirCrearObstaculo();
+    MoverObstaculos()
 
     velY -= gravedad * deltaTime;
 }
@@ -98,4 +106,41 @@ function TocarSuelo() {
         dino.classList.add('dino-corriendo');
     }
     saltando = false;
+}
+
+function DecidirCrearObstaculo() {
+    tiempoHastaObstaculo -= deltaTime;
+    if (tiempoHastaObstaculo <= 0) {
+        CrearObstaculo();
+    }
+}
+
+function CrearObstaculo() {
+    var obstaculo = document.createElement("div");
+    contenedor.appendChild(obstaculo);
+    obstaculo.classList.add('cactus');
+    obstaculo.posX = contenedor.clientWidth;
+    obstaculo.style.left = contenedor.clientWidth + "px";
+
+    obstaculos.push(obstaculo);
+    tiempoHastaObstaculo = tiempoObstaculoMin + Math.random() * (tiempoObstaculoMax - tiempoObstaculoMin) /gameVel;
+}
+
+function MoverObstaculos() {
+    for (let i = obstaculos.length - 1; i >= 0; i--) {
+        if (obstaculos[i].posX < -obstaculos[i].clientWidth) {
+            obstaculos[i].parentNode.removeChild(obstaculos[i]);
+            obstaculos.splice(i, 1);
+            GanarPuntos();
+        } else {
+            obstaculos[i].posX -= CalcularDesplazamiento();
+            obstaculos[i].style.left = obstaculos[i].posX + 'px';
+        }
+        
+    }
+}
+
+function GanarPuntos() {
+    score++;
+    textoScore.innerText = score;
 }
